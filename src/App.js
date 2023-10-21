@@ -1,8 +1,24 @@
 import { useState } from "react";
 import BookCreate from "./components/BookCreate";
+import BookList from "./components/BookList";
 
 function App() {
   const [book, setBook] = useState([]);
+
+  const deleteBookById = (id) => {
+    const updatedBooks = book.filter((book) => book.id !== id);
+    setBook(updatedBooks);
+  };
+
+  const editBookById = (id, title) => {
+    const updatedBooks = book.map((book) => {
+      if (book.id === id) {
+        return { ...book, title };
+      }
+      return book;
+    });
+    setBook(updatedBooks);
+  };
 
   const generateSecureRandomToken = () => {
     const array = new Uint8Array(16); // Create a byte array of length 16
@@ -24,13 +40,9 @@ function App() {
   };
 
   return (
-    <div>
-      {book.map((book) => (
-        <div key={book.id}>
-          {book.title}
-          {book.id}
-        </div>
-      ))}
+    <div className="app">
+      <h1>Book List</h1>
+      <BookList books={book} onDelete={deleteBookById} onEdit={editBookById} />
       <BookCreate onCreateBook={handleCreateBook} />
     </div>
   );
