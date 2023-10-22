@@ -2,17 +2,18 @@ import React, { useEffect, useState } from "react";
 import searchImages from "../api/api"; // import your searchImages function
 import blank from "../assets/blank.png";
 import placeholderImage from "../assets/placeholder.png"; // import the placeholder image
+import useBooksContext from "../hooks/use-books-context";
 import BookEdit from "./BookEdit";
 import Loading from "./Loading";
 
-function BookShow({ book, onDelete, onEdit }) {
+function BookShow({ book }) {
+  const { deleteBookById } = useBooksContext();
   const [showEdit, setShowEdit] = useState(false);
   const [image, setImage] = useState(null); // state for storing the image
   const [loading, setLoading] = useState(true); // state for loading condition
 
-  const handleSubmit = (id, newTitle) => {
+  const handleSubmit = () => {
     setShowEdit(false);
-    onEdit(id, newTitle);
   };
 
   useEffect(() => {
@@ -72,7 +73,7 @@ function BookShow({ book, onDelete, onEdit }) {
 
       <h3>{book.title}</h3>
       <div className="actions">
-        <button className="delete" onClick={() => onDelete(book.id)}>
+        <button className="delete" onClick={() => deleteBookById(book.id)}>
           Delete
         </button>
         <button className="edit" onClick={() => setShowEdit(!showEdit)}>
