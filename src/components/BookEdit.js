@@ -20,7 +20,7 @@ function BookEdit({ book, onSubmit }) {
     <form onSubmit={handleSubmit} className="book-edit">
       <label>Title</label>
       <input className="input" value={title} onChange={handleChange} />
-      <button className="button is-primary">Save</button>
+      <button className="button is-primary">Save </button>
     </form>
   );
 }
